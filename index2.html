@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เกมแข่งรถ</title>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #222;
+    color: white;
+    text-align: center;
+  }
+  h1 {
+    margin: 10px 0;
+  }
+  #game {
+    position: relative;
+    width: 800px;
+    height: 200px;
+    margin: 20px auto;
+    background: url('https://i.ibb.co/3C0K7sx/road.png') repeat-x;
+    background-size: cover;
+    border: 4px solid #fff;
+    overflow: hidden;
+  }
+  .car {
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    top: 40px;
+    transition: left 0.3s;
+  }
+  #playerCar {
+    top: 40px;
+  }
+  #opponentCar {
+    top: 120px;
+  }
+  .finish-line {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background: repeating-linear-gradient(
+      white 0px, white 10px, black 10px, black 20px
+    );
+  }
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background: #ff4747;
+    color: white;
+  }
+  button:hover {
+    background: #e53939;
+  }
+</style>
+</head>
+<body>
+  <h1>🏎 เกมแข่งรถ 🏁</h1>
+  <div id="game">
+    <img id="playerCar" class="car" src="https://i.ibb.co/7jS2yR5/red-car.png" style="left:0;">
+    <img id="opponentCar" class="car" src="https://i.ibb.co/0m4t9qv/blue-car.png" style="left:0;">
+    <div class="finish-line"></div>
+  </div>
+  <button onclick="drive()">ขับ!</button>
+  <h2 id="result"></h2>
+
+<script>
+  let playerPos = 0;
+  let opponentPos = 0;
+  const finish = 700; // px
+
+  function drive() {
+    if (playerPos >= finish || opponentPos >= finish) return;
+
+    // ผู้เล่นสุ่มระยะ
+    playerPos += Math.floor(Math.random() * 60) + 20;
+    if (playerPos > finish) playerPos = finish;
+    document.getElementById("playerCar").style.left = playerPos + "px";
+
+    // คู่แข่งสุ่มระยะ
+    opponentPos += Math.floor(Math.random() * 50) + 30;
+    if (opponentPos > finish) opponentPos = finish;
+    document.getElementById("opponentCar").style.left = opponentPos + "px";
+
+    // ตรวจผู้ชนะ
+    if (playerPos >= finish && opponentPos >= finish) {
+      document.getElementById("result").innerText = "เสมอ!";
+    } else if (playerPos >= finish) {
+      document.getElementById("result").innerText = "คุณชนะ! 🎉";
+    } else if (opponentPos >= finish) {
+      document.getElementById("result").innerText = "คุณแพ้ 😢";
+    }
+  }
+</script>
+</body>
+</html>
