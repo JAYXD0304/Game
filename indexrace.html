@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>เกมแข่งรถ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #222;
+      color: white;
+    }
+    .track {
+      margin-top: 20px;
+      height: 50px;
+      width: 90%;
+      background: #444;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 25px;
+      overflow: hidden;
+    }
+    .car {
+      position: absolute;
+      top: 5px;
+      width: 40px;
+      height: 40px;
+    }
+    #player {
+      background: red;
+      left: 0;
+    }
+    #opponent {
+      background: blue;
+      top: 5px;
+    }
+    button {
+      margin: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏎 เกมแข่งรถ 🏎</h1>
+
+  <div>ความเร็ว: กดปุ่มเพื่อขับรถของคุณไปข้างหน้า!</div>
+
+  <div class="track" style="margin-top: 20px;">
+    <div id="player" class="car"></div>
+  </div>
+  <div class="track">
+    <div id="opponent" class="car"></div>
+  </div>
+
+  <button onclick="drive()">ขับ!</button>
+
+  <h2 id="result"></h2>
+
+  <script>
+    let playerPos = 0;
+    let opponentPos = 0;
+    const finishLine = 500; // pixel
+
+    function drive() {
+      if (playerPos >= finishLine || opponentPos >= finishLine) return;
+
+      // ผู้เล่นขับ (สุ่ม 20-60px)
+      playerPos += Math.floor(Math.random() * 41) + 20;
+      document.getElementById("player").style.left = playerPos + "px";
+
+      // คู่แข่งขับ (สุ่ม 30-50px)
+      opponentPos += Math.floor(Math.random() * 21) + 30;
+      document.getElementById("opponent").style.left = opponentPos + "px";
+
+      checkWinner();
+    }
+
+    function checkWinner() {
+      if (playerPos >= finishLine && opponentPos >= finishLine) {
+        document.getElementById("result").innerText = "เสมอ!";
+      } else if (playerPos >= finishLine) {
+        document.getElementById("result").innerText = "คุณชนะ! 🎉";
+      } else if (opponentPos >= finishLine) {
+        document.getElementById("result").innerText = "คุณแพ้ 😢";
+      }
+    }
+  </script>
+</body>
+</html>
